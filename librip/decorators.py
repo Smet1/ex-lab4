@@ -1,3 +1,4 @@
+import inspect
 # Здесь необходимо реализовать декоратор, print_result который принимает на вход функцию,
 # вызывает её, печатает в консоль имя функции, печатает результат и возвращает значение
 # Если функция вернула список (list), то значения должны выводиться в столбик
@@ -35,3 +36,24 @@
 # test_4
 # 1
 # 2
+import traceback
+
+
+def print_result(func_to_decorate):
+    def decorated_func(*args):
+        # func_to_decorate()
+        print(func_to_decorate.__name__)
+        func_to_decorate(*args)
+        t = func_to_decorate(*args)
+        if type(t) is dict:
+            for key in t.keys():
+                print('{} = {}'.format(key, t[key]))
+        else:
+            if type(t) is list:
+                for values in t:
+                    print(values)
+            else:
+                print(t)
+        return t
+    return decorated_func
+
